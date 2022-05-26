@@ -13,7 +13,10 @@ This is a web component for a simple, interactive Gantt Chart.
 Since the code contains JavaScript modules, you can only run the example from an HTTP server and not from the local file system. For testing on your local PC, I’d recommend the module [live-server](https://www.npmjs.com/package/live-server), which you can install via npm.
 
 To configure tasks, edit the file "index.js".
+
 To run the project, start your web server and open the file "index.html" in the browser.
+
+Alternatively, you can try out the example [here](https://aprenzel.github.io/gantt-chart-vanillajs/) directly in your browser without installation.
 
 ## License
 
