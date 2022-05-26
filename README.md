@@ -14,7 +14,7 @@ Since the code contains JavaScript modules, you can only run the example from an
 
 To configure tasks, edit the file "index.js".
 
-To run the project, start your web server and open the file "index.html" in the browser.
+To run the project, run your local server from the project directory and open the file "index.html" in the browser.
 
 Alternatively, you can try out the example [here](https://aprenzel.github.io/gantt-chart-vanillajs/) directly in your browser without installation.
 
