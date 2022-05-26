@@ -1,0 +1,71 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  input, select{
+    font-size: 10px;
+  }
+  
+  fieldset{
+    border:none;
+  }
+  
+  .select_valid{
+    color: black;
+  }
+  
+  .select_invalid{
+    color: red;
+  }
+  
+  #gantt-container{
+      display: grid;     
+  }
+  
+  .gantt-row-resource{
+    background-color:whitesmoke;
+    color:rgba(0, 0, 0, 0.726);
+    border:1px solid rgb(133, 129, 129);
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .gantt-row-period{
+    background-color:whitesmoke;
+    color:rgba(0, 0, 0, 0.726);
+    border:1px solid rgb(133, 129, 129);
+    text-align: center;
+    
+    display:grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(40px, 1fr);
+
+    line-height:200%;
+  }
+ 
+  .gantt-row-item{
+      border: 1px solid rgb(214, 214, 214);
+      padding: 10px 0 10px 0;
+      position: relative;
+      background-color:white;
+      text-align:left;
+  }
+  
+  .drag-hide {
+    transition: 0.01s;
+    transform: translateX(-9999px);
+  }
+  
+  #select-level{
+    text-align: left;
+    margin-top: 10px;
+  }
+  
+  #gantt-settings{
+  
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+    font-size:10px;
+    margin-bottom: 10px;
+  }
