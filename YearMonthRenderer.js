@@ -17,8 +17,8 @@ export function YearMonthRenderer(root){
     var monthSelectTo;
     var yearSelectTo;
 
-    var selectedJob;
-    var selectedJobElement;
+    this.selectedJob = null;
+    this.selectedJobElement = null;
 
     var getYearFrom = function() {
       return parseInt(yearSelectFrom.value);
@@ -77,6 +77,10 @@ export function YearMonthRenderer(root){
 
         var container = shadowRoot.querySelector("#gantt-container");
         container.innerHTML = "";
+
+        container.removeEventListener("mousedown", _handleMouseDown, false);
+        document.removeEventListener("mouseup", _handleMouseUp, false);
+        container.removeEventListener("dblclick", _handleDblClick, false);
       }
     }
 
@@ -359,7 +363,7 @@ export function YearMonthRenderer(root){
   }
 
 
-  function getGanttElementFromPosition(x, y){
+  var getGanttElementFromPosition = function(x, y){
 
     var items = shadowRoot.elementsFromPoint(x, y);
     var gantt_item = items[0];
@@ -389,7 +393,7 @@ export function YearMonthRenderer(root){
               var jobElement = document.createElement("gantt-job");
               jobElement.id = job.id;
               jobElement.job = job;
-              jobElement.zoom = "year-month";
+              jobElement.level = "year-month";
 
               ganttElement.appendChild(jobElement);
             
@@ -408,6 +412,7 @@ export function YearMonthRenderer(root){
         });
 
         makeJobsResizable();
+        makeJobsEditable();
       }
   }.bind(this);
 
@@ -424,6 +429,28 @@ export function YearMonthRenderer(root){
 
   }.bind(this);
 
+
+  var makeJobsEditable = function(){
+
+    if(checkElements()){
+
+      var container = shadowRoot.querySelector("#gantt-container");
+
+      container.addEventListener("dblclick", _handleDblClick, false);
+      
+    }
+
+  }.bind(this);
+
+
+  var _handleDblClick = function(e){
+
+    if(e.target.tagName == "GANTT-JOB"){
+
+      var jobElement = e.target;
+      jobElement._handleDblClick();
+    }
+  }
 
 
   var _handleMouseDown = function(e){

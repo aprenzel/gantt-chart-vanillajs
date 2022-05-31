@@ -9,6 +9,9 @@ export function DateTimeRenderer(root){
     this.resources=[];
     this.jobs = [];
 
+    this.selectedJob = null;
+    this.selectedJobElement = null;
+
     this.dateFrom = new Date();
     this.dateTo = new Date();
 
@@ -52,6 +55,10 @@ export function DateTimeRenderer(root){
 
         var container = shadowRoot.querySelector("#gantt-container");
         container.innerHTML = "";
+
+        container.removeEventListener("mousedown", _handleMouseDown, false);
+        document.removeEventListener("mouseup", _handleMouseUp, false);
+        container.removeEventListener("dblclick", _handleDblClick, false);
       }
     }
 
@@ -289,7 +296,7 @@ export function DateTimeRenderer(root){
     return diffHours;
   }
 
-  function getGanttElementFromPosition(x, y){
+  var getGanttElementFromPosition = function(x, y){
     var items = shadowRoot.elementsFromPoint(x, y);
     var gantt_item = items[0];
 
@@ -315,7 +322,7 @@ export function DateTimeRenderer(root){
           var jobElement = document.createElement("gantt-job");
           jobElement.id = job.id;
           jobElement.job = job;
-          jobElement.zoom = "day";
+          jobElement.level = "day";
 
           ganttElement.appendChild(jobElement);
 
@@ -342,6 +349,7 @@ export function DateTimeRenderer(root){
     });
 
     makeJobsResizable();
+    makeJobsEditable();
     
   }.bind(this);
 
@@ -359,6 +367,27 @@ export function DateTimeRenderer(root){
   }.bind(this);
 
 
+  var makeJobsEditable = function(){
+
+    if(checkElements()){
+
+      var container = shadowRoot.querySelector("#gantt-container");
+
+      container.addEventListener("dblclick", _handleDblClick, false);
+      
+    }
+
+  }.bind(this);
+
+
+  var _handleDblClick = function(e){
+
+    if(e.target.tagName == "GANTT-JOB"){
+
+      var jobElement = e.target;
+      jobElement._handleDblClick();
+    }
+  }
 
   var _handleMouseDown = function(e){
   

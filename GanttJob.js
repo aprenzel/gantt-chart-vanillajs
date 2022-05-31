@@ -4,35 +4,14 @@ import GanttJobDialog from "./GanttJobDialog.js";
 
   template.innerHTML = 
    `<style>
-  
-   .job{
-        position: absolute;
-        height:38px;
-        top:5px;
-        width: calc(2*100%);
-        z-index: 100;
-        background-color:#1cad2d;
-        border-radius: 0px;
-        cursor: pointer;
-    }
-
-    .job::after {
-        content: '';
-        background-color: #646965;
-        position: absolute;
-        right: 0;
-        width: 4px;
-        height: 100%;
-        cursor: ew-resize;
-    }
-
+      @import "./styles/GanttJob.css";
     </style>
 
     <div class="job"></div>
     `
   ;
 
-  export default class Job extends HTMLElement {
+  export default class GanttJob extends HTMLElement {
 
     constructor() {
       super();
@@ -42,7 +21,7 @@ import GanttJobDialog from "./GanttJobDialog.js";
     }
 
     _job;
-    _zoom = "year-month";
+    _level = "year-month";
 
     connectedCallback() {
 
@@ -51,15 +30,10 @@ import GanttJobDialog from "./GanttJobDialog.js";
         jobElement.draggable = true;
 
         this._render();
-        this.makeEditable();
     }
 
     disconnectedCallback() {
  
-      var panel = this.shadowRoot.querySelector(".job");
-      panel.removeEventListener("dblclick", this._handleDblClick);
-      panel.removeEventListener("mousedown", this._handleMouseDown, false);
-      document.removeEventListener("mouseup", this._handleMouseUp, false);
     }
 
     update(){
@@ -71,22 +45,16 @@ import GanttJobDialog from "./GanttJobDialog.js";
       var jobElement = this.shadowRoot.querySelector(".job");
       var d;
 
-      if(this._zoom == "year-month"){
+      if(this._level == "year-month"){
         d = this._dayDiff(this.job.start, this.job.end);
-      }else{//zoom = "day"
+      }else{//level = "day"
         d = this._hourDiff(this.job.start, this.job.end);
       }
 
       jobElement.style.width = "calc("+(d*100)+"% + "+ d + "px)";
     }
 
-    makeEditable(){
-
-       var panel = this.shadowRoot.querySelector(".job");
-       panel.addEventListener("dblclick", this._handleDblClick);
-    }
-
-    _handleDblClick = function(e){
+    _handleDblClick = function(){
 
         var panel = this.shadowRoot.querySelector(".job");
         panel.style.zIndex = 101;
@@ -95,7 +63,7 @@ import GanttJobDialog from "./GanttJobDialog.js";
         dialogElement.job = this.job;
         dialogElement.xPos = 0;
         dialogElement.yPos = 40;
-        dialogElement.zoom = this.zoom;
+        dialogElement.level = this.level;
       
         panel.appendChild(dialogElement);
 
@@ -117,11 +85,9 @@ import GanttJobDialog from "./GanttJobDialog.js";
     isMouseOverDragHandle = function(e){
 
       var panel = this.shadowRoot.querySelector(".job");
-
       var current_width = parseInt(getComputedStyle(panel, '').width);
     
       if (e.offsetX >= (current_width - this._BORDER_SIZE)) {
-
         return true;
       }
 
@@ -156,15 +122,15 @@ import GanttJobDialog from "./GanttJobDialog.js";
         return this._job;
     }
 
-    set zoom(newValue){
-      this._zoom = newValue;
+    set level(newValue){
+      this._level = newValue;
     }
 
-    get zoom(){
-        return this._zoom;
+    get level(){
+        return this._level;
     }
 
 }
 
-window.customElements.define('gantt-job', Job);
+window.customElements.define('gantt-job', GanttJob);
 

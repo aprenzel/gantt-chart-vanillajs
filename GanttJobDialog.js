@@ -23,7 +23,7 @@
     _job;
     _xPos;
     _yPos;
-    _zoom = "year-month";
+    _level = "year-month";
   
     connectedCallback() {
         this._render();      
@@ -44,7 +44,7 @@
         dialogElement.style.left = this._xPos+"px";
         dialogElement.style.top = this._yPos+"px";
 
-        if(this.zoom == "year-month"){
+        if(this.level == "year-month"){
 
             dialogElement.innerHTML = `
                 <h4 id="job_title">Edit Task</h4>
@@ -158,12 +158,12 @@
         this._render();
     }
 
-    set zoom(newValue){
-       this._zoom = newValue;
+    set level(newValue){
+       this._level = newValue;
     }
 
-    get zoom(){
-       return this._zoom;
+    get level(){
+       return this._level;
     }
 }
 
