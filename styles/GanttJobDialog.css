@@ -1,4 +1,6 @@
-.dialog{
+dialog{
+    display: block;
+    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     position:absolute;
     width:200px;
