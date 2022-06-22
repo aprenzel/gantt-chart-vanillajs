@@ -6,8 +6,23 @@
         @import "./styles/GanttJobDialog.css";
     </style>
 
-    <div class="dialog">
-    </div>
+    <dialog>
+        <h4 id="job_title">Edit Task</h4>
+        <form action="#">
+        <p>
+            <label for="start">Start</label>
+            <input id="start_input" name="start">
+        </p>
+        <p>
+            <label for="start">End</label>
+            <input id="end_input" name="start">
+        </p>
+        <p>
+            <input type="button" id="cancel_button" value="Cancel">
+            <input type="button" id="save_button" value="Save">
+        </p>
+        </form>     
+    </dialog>
     `
   ;
 
@@ -40,48 +55,24 @@
    
     _render(){
  
-        var dialogElement = this.shadowRoot.querySelector(".dialog");
+        var dialogElement = this.shadowRoot.querySelector("dialog");
         dialogElement.style.left = this._xPos+"px";
         dialogElement.style.top = this._yPos+"px";
 
         if(this.level == "year-month"){
 
-            dialogElement.innerHTML = `
-                <h4 id="job_title">Edit Task</h4>
-                <form action="#">
-                <p>
-                    <label for="start">Start</label>
-                    <input type="date" id="start_input" name="start" value="${this.job.start.getFullYear()}-${this.zeroPad(this.job.start.getMonth()+1)}-${this.zeroPad(this.job.start.getDate())}">
-                </p>
-                <p>
-                    <label for="start">End</label>
-                    <input type="date" id="end_input" name="start" value="${this.job.end.getFullYear()}-${this.zeroPad(this.job.end.getMonth()+1)}-${this.zeroPad(this.job.end.getDate())}">
-                </p>
-                <p>
-                    <input type="button" id="cancel_button" value="Cancel">
-                    <input type="button" id="save_button" value="Save">
-                </p>
-                </form>        
-            `;
+            this.shadowRoot.querySelector("#start_input").type = "date";
+            this.shadowRoot.querySelector("#end_input").type = "date";
+
+            this.shadowRoot.querySelector("#start_input").value = `${this.job.start.getFullYear()}-${this.zeroPad(this.job.start.getMonth()+1)}-${this.zeroPad(this.job.start.getDate())}`;
+            this.shadowRoot.querySelector("#end_input").value = `${this.job.end.getFullYear()}-${this.zeroPad(this.job.end.getMonth()+1)}-${this.zeroPad(this.job.end.getDate())}`;
         }else{
 
-            dialogElement.innerHTML = `
-            <h4 id="job_title">Edit Task</h4>
-            <form action="#">
-            <p>
-                <label for="start">Start</label>
-                <input type="datetime-local" id="start_input" name="start" value="${this.job.start.getFullYear()}-${this.zeroPad(this.job.start.getMonth()+1)}-${this.zeroPad(this.job.start.getDate())}T${this.zeroPad(this.job.start.getHours())}:00">
-            </p>
-            <p>
-                <label for="start">End</label>
-                <input type="datetime-local" id="end_input" name="start" value="${this.job.end.getFullYear()}-${this.zeroPad(this.job.end.getMonth()+1)}-${this.zeroPad(this.job.end.getDate())}T${this.zeroPad(this.job.end.getHours())}:00">
-            </p>
-            <p>
-                <input type="button" id="cancel_button" value="Cancel">
-                <input type="button" id="save_button" value="Save">
-            </p>
-            </form>        
-        `;
+            this.shadowRoot.querySelector("#start_input").type = "datetime-local";
+            this.shadowRoot.querySelector("#end_input").type = "datetime-local";
+
+            this.shadowRoot.querySelector("#start_input").value = `${this.job.start.getFullYear()}-${this.zeroPad(this.job.start.getMonth()+1)}-${this.zeroPad(this.job.start.getDate())}T${this.zeroPad(this.job.start.getHours())}:00`;
+            this.shadowRoot.querySelector("#end_input").value = `${this.job.end.getFullYear()}-${this.zeroPad(this.job.end.getMonth()+1)}-${this.zeroPad(this.job.end.getDate())}T${this.zeroPad(this.job.end.getHours())}:00`;
         }
 
         this.shadowRoot.querySelector("#cancel_button").addEventListener("click", this._handleCancel);
@@ -95,7 +86,7 @@
 
     _handleCancel = function(e){
 
-        var dialogElement = this.shadowRoot.querySelector(".dialog");
+        var dialogElement = this.shadowRoot.querySelector("dialog");
         this.dispatchEvent(new CustomEvent("cancel"));
         dialogElement.style.visibility = "hidden";
 
@@ -104,7 +95,7 @@
 
     _handleSave = function(e){
 
-        var dialogElement = this.shadowRoot.querySelector(".dialog");
+        var dialogElement = this.shadowRoot.querySelector("dialog");
         this.job.start = new Date(this.shadowRoot.querySelector("#start_input").value);
         this.job.end = new Date(this.shadowRoot.querySelector("#end_input").value);
 
@@ -116,13 +107,13 @@
 
     _handleClickOutside = function(e){
 
-        var dialogElement = this.shadowRoot.querySelector(".dialog");
+        var dialogElement = this.shadowRoot.querySelector("dialog");
 
         var items = this.shadowRoot.elementsFromPoint(e.offsetX, e.offsetY);
         var close = true;
         
         items.forEach(item => {
-            if(item.classList.contains("dialog")){
+            if(item.tagName == "DIALOG"){
                 close = false;
                 return;
             }

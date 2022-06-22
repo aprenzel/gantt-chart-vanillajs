@@ -297,15 +297,9 @@ export function DateTimeRenderer(root){
   }
 
   var getGanttElementFromPosition = function(x, y){
+    
     var items = shadowRoot.elementsFromPoint(x, y);
-    var gantt_item = items[0];
-
-    items.forEach(item => {
-      if(item.classList.contains("gantt-row-item")){
-        gantt_item = item;
-        return;
-      }
-    });
+    var gantt_item = items.find(item => item.classList.contains("gantt-row-item"));
 
     return gantt_item;
   }

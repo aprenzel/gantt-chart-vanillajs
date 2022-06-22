@@ -51,7 +51,7 @@ import GanttJobDialog from "./GanttJobDialog.js";
         d = this._hourDiff(this.job.start, this.job.end);
       }
 
-      jobElement.style.width = "calc("+(d*100)+"% + "+ d + "px)";
+      jobElement.style.width = `calc(${d*100}% + ${d}px)`;
     }
 
     _handleDblClick = function(){
@@ -87,7 +87,7 @@ import GanttJobDialog from "./GanttJobDialog.js";
       var panel = this.shadowRoot.querySelector(".job");
       var current_width = parseInt(getComputedStyle(panel, '').width);
     
-      if (e.offsetX >= (current_width - this._BORDER_SIZE)) {
+      if (e.offsetX >= (current_width - this._HANDLE_SIZE)) {
         return true;
       }
 
@@ -96,7 +96,7 @@ import GanttJobDialog from "./GanttJobDialog.js";
     }.bind(this);
 
 
-    _BORDER_SIZE = 4;
+    _HANDLE_SIZE = 4;
 
   
     _dayDiff(d1, d2){
