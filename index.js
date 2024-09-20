@@ -1,5 +1,6 @@
 import VanillaGanttChart from "./VanillaGanttChart.js";
 
+//TODO: var durch let ersetzen
 var chart = document.querySelector("#g1");
 
 var jobs = [
